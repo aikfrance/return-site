@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Admin | Return Community</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+        :root {
+            --bg-base: #070709;
+            --bg-surface: #101014;
+            --bg-card: rgba(22, 22, 28, 0.7);
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(255, 255, 255, 0.2);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent-red: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            background-image: 
+                radial-gradient(circle at 50% 0%, #1f1015 0%, transparent 50%),
+                radial-gradient(circle at 100% 100%, #070709 0%, transparent 40%);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(7, 7, 9, 0.85);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-subtle);
+            z-index: 1000;
+        }
+
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            font-size: 1.15rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #ffffff 0%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo span {
+            width: 8px;
+            height: 8px;
+            background: var(--accent-red);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent-red);
+        }
+
+        .back-site {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .back-site:hover {
+            color: var(--text-main);
+        }
+
+        main {
+            max-width: 1300px;
+            margin: 110px auto 0 auto;
+            padding: 3rem 2rem;
+            flex: 1;
+            width: 100%;
+        }
+
+        .section-header {
+            margin-bottom: 2.5rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 0.5rem;
+            color: var(--accent-red);
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        .admin-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 2rem;
+            backdrop-filter: blur(12px);
+        }
+
+        .card h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-subtle);
+            border-radius: 10px;
+            padding: 0.75rem 1rem;
+            color: var(--text-main);
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--accent-red);
+        }
+
+        .btn-admin {
+            width: 100%;
+            background: var(--accent-red);
+            color: white;
+            border: none;
+            padding: 0.75rem;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .btn-admin:hover {
+            opacity: 0.9;
+        }
+
+        footer {
+            border-top: 1px solid var(--border-subtle);
+            background: var(--bg-base);
+            padding: 1.5rem 2rem;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo"><span></span>RETURN COMMUNITY // ADMIN</div>
+            <a href="index.html" class="back-site">← Retour au site</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="section-header">
+            <h2>Panneau d'Administration</h2>
+            <p>Gérez les éléments dynamiques, les textes et les membres de la communauté.</p>
+        </div>
+
+        <div class="admin-grid">
+            <!-- Gestionnaire de Catégories Boutique -->
+            <div class="card">
+                <h3>📁 Nouvelle Catégorie Boutique</h3>
+                <div class="form-group">
+                    <label>ID Technique (ex: darkrp)</label>
+                    <input type="text" id="newCatId" placeholder="ex: ttt">
+                </div>
+                <div class="form-group">
+                    <label>Nom de l'onglet</label>
+                    <input type="text" id="newCatName" placeholder="ex: TTT Mode">
+                </div>
+                <button class="btn-admin" onclick="addNewCategory()">Créer la catégorie</button>
+            </div>
+
+            <!-- Gestionnaire d'Articles Boutique -->
+            <div class="card">
+                <h3>🛍️ Nouvel Article Boutique</h3>
+                <div class="form-group">
+                    <label>Catégorie Cible</label>
+                    <select id="itemCategorySelect"></select>
+                </div>
+                <div class="form-group">
+                    <label>Titre de l'article</label>
+                    <input type="text" id="itemTitle" placeholder="ex: Grade VIP Elite">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="itemDesc" rows="2" placeholder="Avantages..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Prix</label>
+                    <input type="text" id="itemPrice" placeholder="ex: 9.99 €">
+                </div>
+                <button class="btn-admin" onclick="addNewShopItem()">Ajouter l'article</button>
+            </div>
+
+            <!-- Gestion des Textes du Site -->
+            <div class="card">
+                <h3>✏️ Modification des Textes</h3>
+                <div class="form-group">
+                    <label>Titre Principal de l'Accueil</label>
+                    <input type="text" id="editMainTitle" placeholder="À propos de Return Community">
+                </div>
+                <div class="form-group">
+                    <label>Description de la Communauté</label>
+                    <textarea id="editMainDesc" rows="3" placeholder="Texte de présentation..."></textarea>
+                </div>
+                <button class="btn-admin" onclick="saveSiteTexts()">Mettre à jour les textes</button>
+            </div>
+
+            <!-- Gestion des Membres -->
+            <div class="card">
+                <h3>👥 Gestion des Membres & Rôles</h3>
+                <div class="form-group">
+                    <label>Nom du Membre / Staff</label>
+                    <input type="text" id="memberName" placeholder="ex: Pseudo">
+                </div>
+                <div class="form-group">
+                    <label>Rôle / Grade</label>
+                    <input type="text" id="memberRole" placeholder="ex: Responsable Modération">
+                </div>
+                <div class="form-group">
+                    <label>Lien de l'Avatar (URL)</label>
+                    <input type="text" id="memberAvatar" placeholder="https://...">
+                </div>
+                <button class="btn-admin" onclick="saveMemberRole()">Ajouter le membre</button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Return Community. Panel Réservé à l'Administration.</p>
+    </footer>
+
+    <script>
+        function updateCategorySelect() {
+            let shopData = JSON.parse(localStorage.getItem('return_shop_categories'));
+            if (!shopData) {
+                shopData = [
+                    { id: 'scp', name: 'SCP-RP (Zone Karra)', items: [] },
+                    { id: 'darkrp', name: 'DarkRP', items: [] }
+                ];
+                localStorage.setItem('return_shop_categories', JSON.stringify(shopData));
+            }
+
+            const select = document.getElementById('itemCategorySelect');
+            select.innerHTML = '';
+            shopData.forEach(cat => {
+                const opt = document.createElement('option');
+                opt.value = cat.id;
+                opt.innerText = cat.name;
+                select.appendChild(opt);
+            });
+        }
+
+        function addNewCategory() {
+            const id = document.getElementById('newCatId').value.trim().toLowerCase();
+            const name = document.getElementById('newCatName').value.trim();
+
+            if(!id || !name) {
+                alert("Veuillez remplir tous les champs.");
+                return;
+            }
+
+            let shopData = JSON.parse(localStorage.getItem('return_shop_categories')) || [];
+            if(shopData.some(c => c.id === id)) {
+                alert("Cet identifiant existe déjà !");
+                return;
+            }
+
+            shopData.push({ id: id, name: name, items: [] });
+            localStorage.setItem('return_shop_categories', JSON.stringify(shopData));
+            
+            alert(`Catégorie "${name}" créée avec succès !`);
+            document.getElementById('newCatId').value = '';
+            document.getElementById('newCatName').value = '';
+            updateCategorySelect();
+        }
+
+        function addNewShopItem() {
+            const catId = document.getElementById('itemCategorySelect').value;
+            const title = document.getElementById('itemTitle').value.trim();
+            const desc = document.getElementById('itemDesc').value.trim();
+            const price = document.getElementById('itemPrice').value.trim();
+
+            if(!title || !price || !catId) {
+                alert("Veuillez remplir les informations principales.");
+                return;
+            }
+
+            let shopData = JSON.parse(localStorage.getItem('return_shop_categories')) || [];
+            const category = shopData.find(c => c.id === catId);
+
+            if(category) {
+                category.items.push({ title, desc, price });
+                localStorage.setItem('return_shop_categories', JSON.stringify(shopData));
+                alert(`Article "${title}" ajouté avec succès !`);
+                
+                document.getElementById('itemTitle').value = '';
+                document.getElementById('itemDesc').value = '';
+                document.getElementById('itemPrice').value = '';
+            }
+        }
+
+        function saveSiteTexts() {
+            const title = document.getElementById('editMainTitle').value;
+            const desc = document.getElementById('editMainDesc').value;
+            
+            const texts = { title, desc };
+            localStorage.setItem('return_site_texts', JSON.stringify(texts));
+            alert("Textes du site mis à jour avec succès !");
+        }
+
+        function saveMemberRole() {
+            const name = document.getElementById('memberName').value.trim();
+            const role = document.getElementById('memberRole').value.trim();
+            const avatar = document.getElementById('memberAvatar').value.trim() || 'https://avatars.steamstatic.com/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb_full.jpg';
+
+            if(!name || !role) {
+                alert("Veuillez remplir le nom et le rôle du membre.");
+                return;
+            }
+
+            let members = JSON.parse(localStorage.getItem('return_site_members')) || [];
+            members.push({ name, role, avatar });
+            localStorage.setItem('return_site_members', JSON.stringify(members));
+            alert(`Membre ${name} enregistré avec succès !`);
+            
+            document.getElementById('memberName').value = '';
+            document.getElementById('memberRole').value = '';
+            document.getElementById('memberAvatar').value = '';
+        }
+
+        window.onload = function() {
+            updateCategorySelect();
+        };
+    </script>
+</body>
+</html>
