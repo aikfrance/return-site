@@ -1,0 +1,14 @@
+{
+    "name": "return-community-site",
+    "version": "1.0.0",
+    "private": true,
+    "description": "Return Community - Steam OpenID + Steam Web API + GMod server presence verification",
+    "main": "server.js",
+    "scripts": {
+        "start": "node server.js"
+    },
+    "dependencies": {
+        "express": "^5.1.0",
+        "express-session": "^1.18.2"
+    }
+}
