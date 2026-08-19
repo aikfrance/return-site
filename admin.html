@@ -1,3 +1,63 @@
+<script>
+
+async function verifyAdminAccess() {
+
+    try {
+
+        const response =
+            await fetch(
+                '/api/admin/check',
+                {
+                    credentials: 'include'
+                }
+            );
+
+        const data =
+            await response.json();
+
+        if (
+            !response.ok ||
+            !data.ok
+        ) {
+
+            window.location.replace(
+                '/?admin_error=' +
+                encodeURIComponent(
+                    data.code ||
+                    'access_denied'
+                )
+            );
+
+            return false;
+        }
+
+        console.log(
+            'Panel Admin autorisé pour :',
+            data.playerName
+        );
+
+        return true;
+
+    } catch (error) {
+
+        console.error(
+            'Vérification admin impossible :',
+            error
+        );
+
+        window.location.replace(
+            '/?admin_error=server_error'
+        );
+
+        return false;
+    }
+}
+
+
+verifyAdminAccess();
+
+</script>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
