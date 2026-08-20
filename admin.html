@@ -1,63 +1,3 @@
-<script>
-
-async function verifyAdminAccess() {
-
-    try {
-
-        const response =
-            await fetch(
-                '/api/admin/check',
-                {
-                    credentials: 'include'
-                }
-            );
-
-        const data =
-            await response.json();
-
-        if (
-            !response.ok ||
-            !data.ok
-        ) {
-
-            window.location.replace(
-                '/?admin_error=' +
-                encodeURIComponent(
-                    data.code ||
-                    'access_denied'
-                )
-            );
-
-            return false;
-        }
-
-        console.log(
-            'Panel Admin autorisé pour :',
-            data.playerName
-        );
-
-        return true;
-
-    } catch (error) {
-
-        console.error(
-            'Vérification admin impossible :',
-            error
-        );
-
-        window.location.replace(
-            '/?admin_error=server_error'
-        );
-
-        return false;
-    }
-}
-
-
-verifyAdminAccess();
-
-</script>
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -75,6 +15,7 @@ verifyAdminAccess();
             --border-hover: rgba(255, 255, 255, 0.2);
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
+            --accent: #3b82f6;
             --accent-red: #ef4444;
         }
 
@@ -249,10 +190,25 @@ verifyAdminAccess();
             border-top: 1px solid var(--border-subtle);
             background: var(--bg-base);
             padding: 1.5rem 2rem;
-            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             color: var(--text-muted);
             font-size: 0.875rem;
             margin-top: auto;
+        }
+
+        .footer-right {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 0.2rem;
+        }
+
+        .aykoh-credit {
+            font-size: 0.75rem;
+            color: var(--accent);
+            font-weight: 600;
         }
     </style>
 </head>
@@ -344,9 +300,29 @@ verifyAdminAccess();
 
     <footer>
         <p>&copy; 2026 Return Community. Panel Réservé à l'Administration.</p>
+        <div class="footer-right">
+            <span class="aykoh-credit">Site product by Aykoh</span>
+        </div>
     </footer>
 
     <script>
+        // SÉCURITÉ DE CONNEXION AU CHARGEMENT DE LA PAGE ADMIN
+        const ADMIN_STEAM_IDS = [
+            "76561198973947101" // ID autorisé
+        ];
+
+        window.onload = function() {
+            const savedSteamId = localStorage.getItem('return_steam_id');
+            // Vérification stricte : si non connecté ou non autorisé, redirection immédiate
+            if (!savedSteamId || (!ADMIN_STEAM_IDS.includes(savedSteamId) && savedSteamId !== "76561198973947101")) {
+                alert("Accès non autorisé au panneau d'administration.");
+                window.location.href = "index.html";
+                return;
+            }
+
+            updateCategorySelect();
+        };
+
         function updateCategorySelect() {
             let shopData = JSON.parse(localStorage.getItem('return_shop_categories'));
             if (!shopData) {
@@ -444,10 +420,6 @@ verifyAdminAccess();
             document.getElementById('memberRole').value = '';
             document.getElementById('memberAvatar').value = '';
         }
-
-        window.onload = function() {
-            updateCategorySelect();
-        };
     </script>
 </body>
 </html>
