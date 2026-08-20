@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administration | Return SCP-RP</title>
+    <title>Administration | Return Community</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
         :root {
             --bg-base: #070709;
-            --bg-surface: #101014;
             --bg-card: rgba(22, 22, 28, 0.85);
             --border-subtle: rgba(255, 255, 255, 0.08);
             --text-main: #f8fafc;
@@ -17,18 +16,11 @@
             --accent: #3b82f6;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
 
         body {
             background-color: var(--bg-base);
-            background-image: 
-                radial-gradient(circle at 50% 0%, #1f1215 0%, transparent 50%),
-                radial-gradient(circle at 100% 100%, #030712 0%, transparent 40%);
+            background-image: radial-gradient(circle at 50% 0%, #1f1215 0%, transparent 50%), radial-gradient(circle at 100% 100%, #030712 0%, transparent 40%);
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
@@ -37,224 +29,83 @@
             padding: 2rem;
         }
 
-        .login-card {
+        .login-card, #adminContent {
             background: var(--bg-card);
             border: 1px solid var(--border-subtle);
             border-radius: 20px;
             padding: 2.5rem;
             width: 100%;
-            max-width: 420px;
+            max-width: 900px;
             backdrop-filter: blur(16px);
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
-            text-align: center;
         }
 
-        .login-card h2 {
-            font-size: 1.5rem;
-            font-weight: 800;
-            margin-bottom: 0.5rem;
-            color: #f87171;
-        }
+        .login-card { max-width: 420px; text-align: center; }
+        h1, h2 { color: #f87171; margin-bottom: 1rem; }
+        .form-input { width: 100%; background: rgba(0, 0, 0, 0.4); border: 1px solid var(--border-subtle); padding: 0.75rem 1rem; border-radius: 10px; color: white; margin-bottom: 1rem; }
+        .btn-dash { background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-subtle); color: white; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 600; }
+        .btn-login { background: #ef4444; width: 100%; padding: 0.75rem; border-radius: 10px; border: none; color: white; font-weight: 700; cursor: pointer; }
+        
+        .admin-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-subtle); padding-bottom: 1rem; margin-bottom: 2rem; }
+        .dash-card { background: rgba(0, 0, 0, 0.2); border: 1px solid var(--border-subtle); border-radius: 16px; padding: 1.5rem; }
+        
+        .table-mock { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+        .table-mock th, .table-mock td { padding: 0.75rem; border-bottom: 1px solid var(--border-subtle); text-align: left; }
 
-        .login-card p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-bottom: 2rem;
-        }
-
-        .form-group {
-            margin-bottom: 1.25rem;
-            text-align: left;
-        }
-
-        .form-label {
-            display: block;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--text-muted);
-            margin-bottom: 0.5rem;
-        }
-
-        .form-input {
-            width: 100%;
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid var(--border-subtle);
-            padding: 0.75rem 1rem;
-            border-radius: 10px;
-            color: white;
-            font-size: 0.95rem;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-
-        .form-input:focus {
-            border-color: #f87171;
-        }
-
-        .btn-login {
-            width: 100%;
-            background: #ef4444;
-            color: white;
-            padding: 0.75rem;
-            border-radius: 10px;
-            border: none;
-            font-weight: 700;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: opacity 0.2s, transform 0.2s;
-            margin-top: 0.5rem;
-            box-shadow: 0 4px 14px rgba(239, 68, 68, 0.4);
-        }
-
-        .btn-login:hover {
-            opacity: 0.9;
-            transform: translateY(-1px);
-        }
-
-        .back-link {
-            display: inline-block;
-            margin-top: 1.5rem;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-
-        .back-link:hover {
-            color: var(--text-main);
-        }
-
-        #adminContent {
-            display: none;
-            width: 100%;
-            max-width: 1000px;
-        }
-
-        .admin-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            border-bottom: 1px solid var(--border-subtle);
-            padding-bottom: 1rem;
-        }
-
-        .admin-header h1 {
-            font-size: 1.75rem;
-            color: #f87171;
-        }
-
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .dash-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-subtle);
-            border-radius: 16px;
-            padding: 1.5rem;
-        }
-
-        .dash-card h3 {
-            font-size: 1.1rem;
-            margin-bottom: 0.75rem;
-        }
-
-        .dash-card p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-        }
-
-        .btn-dash {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border-subtle);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.85rem;
-            font-weight: 600;
-        }
-        .btn-dash:hover { background: rgba(255, 255, 255, 0.1); }
+        .footer-credit { position: fixed; bottom: 20px; right: 20px; font-size: 0.75rem; color: var(--accent); font-weight: 600; }
     </style>
 </head>
 <body>
 
-    <!-- Écran de Connexion Admin -->
     <div id="loginScreen" class="login-card">
-        <h2>Zone Restreinte</h2>
-        <p>Connexion requise pour accéder au panel de direction du Site-19.</p>
-        
-        <div class="form-group">
-            <label class="form-label">Code d'accès Admin / Mot de passe</label>
-            <input type="password" id="adminPassword" class="form-input" placeholder="Entrez le code secret...">
-        </div>
+        <h2>Return Community</h2>
+        <p style="color: var(--text-muted); margin-bottom: 2rem;">Accès Panel Administration</p>
+        <input type="password" id="adminPassword" class="form-input" placeholder="Code secret...">
         <button class="btn-login" onclick="checkAdminPassword()">S'authentifier</button>
-        <br>
-        <a href="index.html" class="back-link">← Retourner sur le site principal</a>
+        <br><br>
+        <a href="index.html" style="color: var(--text-muted); font-size: 0.85rem;">← Retour au site</a>
     </div>
 
-    <!-- Panel Admin Réel (Caché tant qu'on est pas connectés) -->
-    <div id="adminContent">
+    <div id="adminContent" style="display: none;">
         <div class="admin-header">
-            <h1>Panel Administrateur - Site-19</h1>
-            <button class="btn-dash" onclick="adminLogout()" style="background: rgba(239, 68, 68, 0.2); color: #fca5a5; border-color: rgba(239, 68, 68, 0.3);">Déconnexion Admin</button>
+            <h1>Panel Administrateur - Return Community</h1>
+            <button class="btn-dash" onclick="window.location.href='index.html'">Déconnexion</button>
         </div>
 
-        <div class="dashboard-grid">
-            <div class="dash-card">
-                <h3>Gestion des Joueurs</h3>
-                <p>Consulter les logs de connexion, modifier les accréditations et gérer les bans.</p>
-                <button class="btn-dash" onclick="alert('Module de gestion des joueurs')">Gérer</button>
-            </div>
-            <div class="dash-card">
-                <h3>Paramètres du Serveur</h3>
-                <p>Modifier l'état du serveur Garry's Mod, les bannières et annonces globales.</p>
-                <button class="btn-dash" onclick="alert('Module paramètres')">Configurer</button>
-            </div>
-            <div class="dash-card">
-                <h3>Archives de Sécurité</h3>
-                <p>Visualiser les rapports d'incidents et les dossiers classés du personnel.</p>
-                <button class="btn-dash" onclick="alert('Module archives')">Consulter</button>
-            </div>
-        </div>
-        <div style="margin-top: 2rem;">
-            <a href="index.html" class="back-link">← Retour au site</a>
+        <div class="dash-card">
+            <h3>Gestion des Membres Connectés</h3>
+            <table class="table-mock">
+                <thead><tr><th>Utilisateur</th><th>ID Steam</th></tr></thead>
+                <tbody id="membersBody"></tbody>
+            </table>
         </div>
     </div>
+
+    <div class="footer-credit">Site product by Aykoh</div>
 
     <script>
-        // Définis ton mot de passe administrateur ici
-        const ADMIN_SECRET_CODE = "SCP19-ADMIN"; 
-
-        window.addEventListener('DOMContentLoaded', () => {
-            // Vérifie si l'admin est déjà connecté dans cette session de navigateur
-            if (sessionStorage.getItem('admin_authenticated') === 'true') {
-                showAdminPanel();
-            }
-        });
+        const ADMIN_SECRET_CODE = "1g.#Yo8qP_1"; 
 
         function checkAdminPassword() {
-            const inputVal = document.getElementById('adminPassword').value;
-            if (inputVal === ADMIN_SECRET_CODE) {
-                sessionStorage.setItem('admin_authenticated', 'true');
-                showAdminPanel();
+            if (document.getElementById('adminPassword').value === ADMIN_SECRET_CODE) {
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('adminContent').style.display = 'block';
+                loadAdminData();
             } else {
-                alert("Code d'accès incorrect ! Accès refusé par la Sécurité du Site-19.");
+                alert("Code incorrect.");
             }
         }
 
-        function showAdminPanel() {
-            document.getElementById('loginScreen').style.display = 'none';
-            document.getElementById('adminContent').style.display = 'block';
-        }
-
-        function adminLogout() {
-            sessionStorage.removeItem('admin_authenticated');
-            window.location.reload();
+        function loadAdminData() {
+            // Récupère l'utilisateur connecté via Steam (stocké par index.html)
+            const user = JSON.parse(localStorage.getItem('return_user_session'));
+            const steamId = localStorage.getItem('return_steam_id');
+            
+            if (user) {
+                document.getElementById('membersBody').innerHTML = `<tr><td>${user.name}</td><td>${steamId}</td></tr>`;
+            } else {
+                document.getElementById('membersBody').innerHTML = `<tr><td colspan="2" style="text-align:center;">Aucun membre connecté via Steam</td></tr>`;
+            }
         }
     </script>
 </body>
